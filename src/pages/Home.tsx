@@ -1,51 +1,92 @@
-import { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabase'
 import type { Producto } from '../types'
+import Footer from '../components/Footer'
+// Datos temporales mientras conectamos la base de datos
+const productosFalsos: Producto[] = [
+  {
+    id: 1,
+    Nombre: 'Vestido Monarca',
+    Precio: 82000,
+    Descripcion: 'Vestido para ocasiones especiales',
+    Imagen: null,
+    Categoria: 'Ropa mujer'
+  },
+  {
+    id: 2,
+    Nombre: 'Camisa Urbana',
+    Precio: 65000,
+    Descripcion: 'Camisa casual para hombre',
+    Imagen: null,
+    Categoria: 'Ropa hombre'
+  },
+  {
+    id: 3,
+    Nombre: 'Blusa Elegante',
+    Precio: 55000,
+    Descripcion: 'Blusa para uso diario o eventos',
+    Imagen: null,
+    Categoria: 'Ropa mujer'
+  }
+]
 
 function Home() {
-  // Guardamos la lista de productos que viene de Supabase
-  const [productos, setProductos] = useState<Producto[]>([])
-  // Sabemos si todavía está cargando
-  const [cargando, setCargando] = useState(true)
-
-  // useEffect se ejecuta una vez cuando el componente aparece en pantalla
-  useEffect(() => {
-    obtenerProductos()
-  }, [])
-
-  async function obtenerProductos() {
-    const { data, error } = await supabase
-      .from('Productos')
-      .select('*')
-
-    if (error) {
-      console.error('Error al traer productos:', error)
-    } else {
-      setProductos(data)
-    }
-    setCargando(false)
-  }
-
-  if (cargando) {
-    return <p className="p-10 text-xl">Cargando productos...</p>
-  }
-
   return (
-    <div className="p-10">
-      <h1 className="text-4xl font-bold text-teal-600 mb-6">Deluxe Cali</h1>
+    <div className="min-h-screen bg-[#111111]">
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {productos.map((producto) => (
-        <div key={producto.Id} className="border rounded-lg p-4 shadow">
-            <h2 className="text-xl font-semibold">{producto.Nombre}</h2>
-            <p className="text-gray-600">{producto.Descripcion}</p>
-            <p className="text-teal-600 font-bold mt-2">
-              ${producto.Precio.toLocaleString()}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
+      {/* Header */}
+      <header className="border-b border-[#2a2a2a] px-6 py-4 flex justify-between items-center">
+        <h1 className="font-marca text-2xl text-[#2dd4bf] tracking-widest">
+          DELUXE CALI
+        </h1>
+        <nav className="flex gap-6 text-sm text-gray-400">
+          <a href="#" className="hover:text-[#2dd4bf] transition-colors">Mujer</a>
+          <a href="#" className="hover:text-[#2dd4bf] transition-colors">Hombre</a>
+          <a href="#" className="hover:text-[#2dd4bf] transition-colors">Contacto</a>
+        </nav>
+      </header>
+
+      {/* Catálogo */}
+      <main className="max-w-6xl mx-auto px-6 py-12">
+        <h2 className="text-gray-400 text-sm tracking-widest uppercase mb-8">
+          Colección disponible
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {productosFalsos.map((producto) => (
+            <div
+              key={producto.id}
+              className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg overflow-hidden hover:border-[#2dd4bf] transition-colors"
+            >
+              {/* Imagen placeholder */}
+              <div className="bg-[#222222] h-64 flex items-center justify-center">
+                <span className="text-gray-600 text-sm">Sin imagen</span>
+              </div>
+
+              {/* Info del producto */}
+              <div className="p-4">
+                <p className="text-xs text-[#2dd4bf] tracking-widest uppercase mb-1">
+                  {producto.Categoria}
+                </p>
+                <h3 className="text-white font-semibold text-lg">
+                  {producto.Nombre}
+                </h3>
+                <p className="text-gray-400 text-sm mt-1">
+                  {producto.Descripcion}
+                </p>
+                <p className="text-[#2dd4bf] font-bold text-xl mt-3">
+                  ${producto.Precio.toLocaleString('es-CO')}
+                </p>
+
+                <button className="mt-4 w-full bg-[#2dd4bf] text-black font-semibold py-2 rounded hover:bg-[#14b8a6] transition-colors">
+                  Pedir por WhatsApp
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
+    <Footer />
+  </div>
+
   )
 }
 
