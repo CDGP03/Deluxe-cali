@@ -1,5 +1,6 @@
 import type { Producto } from '../types'
 import Footer from '../components/Footer'
+import Hero from '../components/Hero'
 // Datos temporales mientras conectamos la base de datos
 const productosFalsos: Producto[] = [
   {
@@ -8,7 +9,8 @@ const productosFalsos: Producto[] = [
     Precio: 82000,
     Descripcion: 'Vestido para ocasiones especiales',
     Imagen: null,
-    Categoria: 'Ropa mujer'
+    Categoria: 'Ropa mujer',
+    Disponibilidad: false
   },
   {
     id: 2,
@@ -16,7 +18,8 @@ const productosFalsos: Producto[] = [
     Precio: 65000,
     Descripcion: 'Camisa casual para hombre',
     Imagen: null,
-    Categoria: 'Ropa hombre'
+    Categoria: 'Ropa hombre',
+    Disponibilidad: false
   },
   {
     id: 3,
@@ -24,7 +27,8 @@ const productosFalsos: Producto[] = [
     Precio: 55000,
     Descripcion: 'Blusa para uso diario o eventos',
     Imagen: null,
-    Categoria: 'Ropa mujer'
+    Categoria: 'Ropa mujer',
+    Disponibilidad: false
   }
 ]
 
@@ -43,9 +47,9 @@ function Home() {
           <a href="#" className="hover:text-[#2dd4bf] transition-colors">Contacto</a>
         </nav>
       </header>
-
+       <Hero />
       {/* Catálogo */}
-      <main className="max-w-6xl mx-auto px-6 py-12">
+      <main id="catalogo" className="max-w-6xl mx-auto px-6 py-12">
         <h2 className="text-gray-400 text-sm tracking-widest uppercase mb-8">
           Colección disponible
         </h2>
@@ -84,9 +88,8 @@ function Home() {
           ))}
         </div>
       </main>
-    <Footer />
-  </div>
-
+      <Footer />
+    </div>
   )
 }
 
