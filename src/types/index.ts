@@ -6,4 +6,4 @@ export type Producto = {
     Imagen: string | null
     Categoria: string;
     Disponibilidad: boolean;
-}
+}  
